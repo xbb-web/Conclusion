@@ -33,6 +33,14 @@ MessageBox.confirm('该信息不会被显示', {
 
 
 
+#### 组件命名冲突
+
+在工单详情中有个“工单进展”组件，随手命名为 `Progress` ，然后发现浏览器报了一个错误：`Do not use built-in or reserved HTML elements as component id: Progress`。原因是Element-UI中也有个 `Progress`组件，而这个组件是全局注册的，从而导致了组件命名冲突。
+
+关于组件的命名规范，可以看一下这篇拓展阅读：[聊聊 Vue 组件命名那些事](http://cnodejs.org/topic/5816aabdcf18d0333412d323)
+
+
+
 ## Javascript
 
 
