@@ -74,5 +74,25 @@ MessageBox.confirm('该信息不会被显示', {
 
 
 
+## 项目页面坑点
+（列表页）
+ 如果是新增一个列表页：
+1.需要在'src/config/list_config'至少设置一项最小列宽，正常来说一般关于名称的都会设置个宽度，毕竟默认的宽度很窄，以待采购列表为例，
+在list_config 里的COLMUN_WIDTH这个对象里添加一个对象，对象名waitPurchaseApi为模块名，对象里每个属性与列表项的attr名对应，后面的是宽度值
+  // 待采购
+  waitPurchaseApi: {
+    productUnit: 80,
+    supplierJoinName: 180
+  },
+  
+ 2.操作列的按钮需要在'src/config/common_config'里配置好，这里要注意后端传过来的每条数据里的listPermissionSet值，它是个数组，用来告诉你每条数据会用到的操作按钮，比如listPermissionSet:["offline", "edit", "del"]，然后common_config里menuType对象里没有offline的话就往里面加一个关于offline的对象，对象里会包含：name（按钮名称），type按钮样式（element UI）
+  offline: {
+    name: '下架',
+    type: 'warning'
+  },
+ 之所以记录下这个问题是因为我当时在common_config添加了但是页面还是报错，最后才发现后端这个数据传的有问题。
+
+
+
 
 
