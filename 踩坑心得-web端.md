@@ -72,11 +72,34 @@ MessageBox.confirm('该信息不会被显示', {
 
 ## Vue-router
 
+一.路由传参  query 与 params 区别（应用于跳转界面并传参）
+1.用法上
+this.$router.push({
+    path: 'jxcAddPage',
+    query: {
+      moduleName: 'purchase',
+      id: ''
+    }
+})
+this.$router.push({
+    name: 'jxcAddPage',
+    params: {
+      moduleName: 'purchase',
+      id: '',
+    }
+})
+接收参数都是类似的，分别是...this.$route.query.name...和...this.$route.params.name...
+注意接收参数的时候，已经是...$route...而不是...$router...了
 
+2.展示上
+query传参会在浏览器地址栏中显示参数，params则不显示
+...http://localhost:8080/#/jxcAddPage?moduleName=instock&id=395...
+...http://localhost:8080/#/jxcAddPage...
 
 ## 项目页面坑点
 （列表页）
  如果是新增一个列表页：
+ 
 1.需要在'src/config/list_config'至少设置一项最小列宽，正常来说一般关于名称的都会设置个宽度，毕竟默认的宽度很窄，以待采购列表为例，
 在list_config 里的COLMUN_WIDTH这个对象里添加一个对象，对象名waitPurchaseApi为模块名，对象里每个属性与列表项的attr名对应，后面的是宽度值
   // 待采购
