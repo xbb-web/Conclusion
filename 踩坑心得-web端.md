@@ -65,39 +65,39 @@ MessageBox.confirm('该信息不会被显示', {
 
 img标签动态绑定静态src地址时，图片不能正常显示，解决办法用require引入地址（做应用中心轮播时有碰到）
  
-<img :src='imgUrl'>
-...
-data() {
-  return {
-    imgUrl: require('./img.png')
-  }
-}
+	<img :src='imgUrl'>
+	...
+	data() {
+	  return {
+	    imgUrl: require('./img.png')
+	  }
+	}
 
 #### 对象响应式
 
 Vue中的属性如果是Object，或者是数组，数组中有Object，那么这些Object最好在最开始就把所有需要用到的属性都定义一遍，如果在运行中重新添加属性，这个属性并不是响应式的，就不会实现双向绑定，例如：
-const vm = new Vue({
-  data: {
-    a: {
-      text: 'aaa'
-    }
-  }
-})
-vm.a.b = 'ccc'
+	const vm = new Vue({
+	  data: {
+	    a: {
+	      text: 'aaa'
+	    }
+	  }
+	})
+	vm.a.b = 'ccc'
 这样的情况，a的b属性不是响应式的，所以不会双向绑定（）
 （之前在给列表另外加属性控制列表的展开和收起的时候，是在一开始拿到数据的时候就遍历一遍，把属性加上，不然动态改变这个属性是没有用的）
  
 #### ref问题(新建的时候如果同样的控件多次使用，用到$refs时需要遍历)
-<ul>
-  <li ref="text">dfj</li>
-  <li ref="text">dfj</li>
-  <li ref="text">dfj</li>
-</ul>
+	<ul>
+	  <li ref="text">dfj</li>
+	  <li ref="text">dfj</li>
+	  <li ref="text">dfj</li>
+	</ul>
 这样写的话this.$refs.text获取的是最后一个li
 
-<ul>
-  <li ref="text" v-for="i in arr">dfj</li>
-</ul>
+	<ul>
+	  <li ref="text" v-for="i in arr">dfj</li>
+	</ul>
 这样写的话this.$refs.text获取的是数组
 
 ## Vuex
