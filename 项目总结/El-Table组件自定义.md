@@ -192,7 +192,7 @@
 
 由于Element-ui版本迭代频繁，因此当我们更新了element-ui的版本后，也需要检查el-table是否也需要更新。
 
-1. 首先访问element-ui的github资源：https://github.com/ElemeFE/element/tree/dev/packages/table/src，![mage-20180425135401](https://raw.githubusercontent.com/xbb-web/Conclusion/master/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/imgs/201804251354017.png)
+1. 首先访问element-ui的github资源：[https://github.com/ElemeFE/element/tree/dev/packages/table/src](https://github.com/ElemeFE/element/tree/dev/packages/table/src)，![mage-20180425135401](https://raw.githubusercontent.com/xbb-web/Conclusion/master/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/imgs/201804251354017.png)
 
 观察table目录下，各个文件的更新时间，近期被更新过的文件，就是我们要同步更新的文件。
 
