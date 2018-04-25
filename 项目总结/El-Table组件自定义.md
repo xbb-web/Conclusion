@@ -2,7 +2,7 @@
 
 ### 一、需求
 
-![mage-20180425095724](https://raw.githubusercontent.com/xbb-web/Conclusion/master/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/imgs/201804250957243.png)
+![mage-20180425095724](https://github.com/xbb-web/Conclusion/blob/master/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/imgs/201804250957243.png)
 
 如图，在table-head和table-body之间新增一行，用来展示部分列的筛选控件，并且可通过一个开关来控制这一行的显示与隐藏。
 
@@ -197,3 +197,4 @@
 观察table目录下，各个文件的更新时间，近期被更新过的文件，就是我们要同步更新的文件。
 
 2. 可使用 Beyond Compare等文件比对工具，将最新版本的文件与本地文件进行比对，然后通过更新过的代码。
+
