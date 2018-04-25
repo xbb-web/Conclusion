@@ -48,14 +48,14 @@
 
 1. 复制`element-ui/packages/table/`到`src/custom/`目录下；
 
-2. 编辑`src/main.js`，删掉原有的Table组件的引入方式，并新增如下代码：
+2. 新建一个vue页面，以如下方式引入新的table组件：
 
    ```javascript
    import Table from 'src/custom/table'
    import 'element-ui/packages/theme-chalk/lib/table.css'
    ```
 
-3. 此时会发现项目开始报错，然后将`element-ui/src/utils/resize-event.js`复制到`src/custom`目录下；然后打开`src/custom/table/table-body.js`，注释掉第4行和第15行：
+3. 此时会发现项目开始报错，解决办法：将`element-ui/src/utils/resize-event.js`复制到`src/custom`目录下；然后打开`src/custom/table/table-body.js`，注释掉第4行和第15行：
 
    ```javascript
    import { getCell, getColumnByCell, getRowIdentity } from './util';
@@ -76,7 +76,7 @@
      },
    ```
 
-4. 至此，el-table已经被移植出来，并替换掉了原有的el-table组件。
+4. 至此，el-table已经被移植出来，接下来对该组件进行二次开发。
 
 
 
@@ -188,13 +188,48 @@
 
 
 
+
+#### 将自定义的element-ui托管到github
+
+1. fork一份element-ui到自己的github账号，然后git clone到本地；
+
+2. 打开 .gitignore文件，将`lib`这一行删除
+
+3. 将`src/custom/table`自定义组件中的table.vue和table-filter.js两个文件复制到`package/table/src`目录下
+
+4. 运行`npm run dist`执行打包动作（打包过程中可能会报错，可能导致报错的原因有talbe-filter.js无法通过eslint校验的问题，因为element-ui的ESLint配置不同，需根据报错信息进行相应修改）
+
+5. 打包完成后，执行以下操作：
+
+   ```
+   git add .
+   git commit -m "提交备注"
+   git tag "tag版本号"
+   git push -u origin dev
+   git push origin "tag版本号"
+   ```
+
+6. 更改项目根目录, 编辑package.json文件中，element-ui的版本路径：
+
+   ```javascript
+   "dependencies": {
+       "element-ui": "git+https://github.com/xbb-web/element.git#custom2.3.6" // custom2.3.6为tag版本
+   }
+   ```
+
+7. 重新安装项目依赖，所加载到的element-ui，就是我们自己上传的github的版本（因为github的网络问题，npm install安装时速度会有些慢，后续可考虑直接上传到npm服务器）
+
+   ​
+
+
 #### 版本更新
 
-由于Element-ui版本迭代频繁，因此当我们更新了element-ui的版本后，也需要检查el-table是否也需要更新。
+由于Element-ui版本迭代频繁，因此当我们更新了element-ui的版本后，也要检查el-table是否也需要更新。
 
 1. 首先访问element-ui的github资源：[https://github.com/ElemeFE/element/tree/dev/packages/table/src](https://github.com/ElemeFE/element/tree/dev/packages/table/src)，![mage-20180425135401](https://raw.githubusercontent.com/xbb-web/Conclusion/master/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/imgs/201804251354017.png)
 
 观察table目录下，各个文件的更新时间，近期被更新过的文件，就是我们要同步更新的文件。
 
-2. 可使用 Beyond Compare等文件比对工具，将最新版本的文件与本地文件进行比对，然后通过更新过的代码。
+2. 可使用 Beyond Compare等文件比对工具，将最新版本的文件与本地文件进行比对，然后同步更新过的代码。
+3. 重新执行 **将自定义的element-ui托管到github** 的第3—7步。
 
