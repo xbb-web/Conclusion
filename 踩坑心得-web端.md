@@ -564,7 +564,8 @@ this.$router.push({name: roterName, params: {page: this.getPage.currentPage, bel
 ```
 ## VUE递归组件的应用---BOM结构图
 [![SC4HVLC0JJ1HKBWKTK.png](http://www.z4a.net/images/2018/08/21/SC4HVLC0JJ1HKBWKTK.png)](http://www.z4a.net/image/7IuknT)
-为BOM物料是**多层级**的，所以展示它的数据也是一个**嵌套关系**的数据结构图，但是层级有限，而且样式有设计，而且考虑到以后的拓展性（比如做成树状展开收起），于是采用了递归组件的方式来实现上图效果。
+
+因为BOM物料是**多层级**的，所以展示它的数据也是一个**嵌套关系**的数据结构图，但是层级有限，而且样式有设计，而且考虑到以后的拓展性（比如做成树状展开收起），于是采用了递归组件的方式来实现上图效果。
 主要代码如下：
 ```
 <structure :structureList="structureList"></structure>
