@@ -524,5 +524,93 @@ bug是解决了，可每次这么写也太不优雅了吧？秉持着能偷懒�
 ```
 function handleTransfer (type, id, isEdit，...) {}
 ```
-
-
+## 小数精度出炉方法---对输入值的小数位超过限制部分进行了截断
+decimalPrecision：小数要精确的位数
+```
+onInput (item) {
+      var value = this.form[item.attr].toString()
+      if (value.indexOf('.') !== -1) {
+        var precisionLen = value.split('.')[1].length // 获取input输入小数位的长度
+        if (precisionLen > item.decimalPrecision) {
+          // 如果小数位超出，则保留有效小数位
+          this.form[item.attr] = value.substr(0, value.indexOf('.') + item.decimalPrecision + 1)
+        }
+      }
+}
+```
+## 待采购待入库待出库回退列表的翻页优化
+由于进销存相关模块的新建编辑页面是跳转到新页面的，而不是像当前路由下打开一个弹框，所以保存或者取消回列表页的时候需要回到跳转前面页面，于是做了"**进行操作之后返回操作之前所在页面**"的处理
+使用了**VUEX**将页码和左上角的分类存了起来。
+1.监听页码,更新vuex中的页码和分类
+```
+    currentPage (old, number) {
+      let updateVuexObj = {
+        currentPage: this.currentPage,
+        belongerType: this.belonger.belongerType
+      }
+      this.updateVuexPage(updateVuexObj)
+    }
+```
+2.更新vuexPageObj
+```
+vuexPageObj: {}, // 列表页码分类存入这个对象
+[types.UPDATE_VUEXPAGE] (state, obj) {
+    state.vuexPageObj = obj
+}
+```
+3.在需要的时候再获取（进入跳转的页面后通过VUEX里面定义的```getPage```获取页码```currentPage```和分类在保存或者取消的时候再通过路由带出去进行其他处理）
+```
+this.$router.push({name: roterName, params: {page: this.getPage.currentPage, belongerType: this.getPage.belongerType, watchPage: true}})
+```
+## VUE递归组件的应用---BOM结构图
+[![SC4HVLC0JJ1HKBWKTK.png](http://www.z4a.net/images/2018/08/21/SC4HVLC0JJ1HKBWKTK.png)](http://www.z4a.net/image/7IuknT)
+为BOM物料是**多层级**的，所以展示它的数据也是一个**嵌套关系**的数据结构图，但是层级有限，而且样式有设计，而且考虑到以后的拓展性（比如做成树状展开收起），于是采用了递归组件的方式来实现上图效果。
+主要代码如下：
+```
+<structure :structureList="structureList"></structure>
+```
+```
+structure: {
+      name: 'gs',
+      template: `
+      <ul class="level-one">
+        <li v-for="it in structureList">
+          <div class="level-out">
+            <div class="level-left">
+              <h1>{{it.name}}</h1>
+              <p>规格：{{it.specification}}</p>
+            </div>
+            <div class="level-right">
+              <span>{{it.num}}/{{it.unit}}</span>
+            </div>
+          </div>
+          <gs :structureList="it.children" v-if="it.children && it.children.length"></gs>
+        </li>
+      </ul>`,
+      props: ['structureList'],
+      data () {
+        return {
+          show: false
+        }
+      }
+    }
+```
+**注意**：递归调用是条件性的,防止进入死循环
+## element表格自定义表头，加入element组件,组件上的属性加在props里
+比如在==render-header==属性中定义的方法里加入一个Tooltip 文字提示，return h方法里的内容是你要自定义的东西
+```
+h(
+      'el-tooltip',
+      {
+        'props': {placement: 'top', effect: 'light', content: '提示内容'}
+      [
+        h(
+          'span',
+          {
+            'class': 'icon el-icon-question',
+            'style': 'color:#666'
+          }
+        )
+      ]
+    )
+```
