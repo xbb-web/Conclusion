@@ -598,7 +598,7 @@ structure: {
 ```
 **注意**：递归调用是条件性的,防止进入死循环
 ## element表格自定义表头，加入element组件,组件上的属性加在props里
-比如在==render-header==属性中定义的方法里加入一个Tooltip 文字提示，return h方法里的内容是你要自定义的东西
+比如在==render-header==属性中定义的方法里加入一个Tooltip 文字提示，return h方法里的内容是你要自定义的东西，组件上的属性加在props里
 ```
 h(
       'el-tooltip',
@@ -615,3 +615,27 @@ h(
       ]
     )
 ```
+## 模拟生产模块中的可生产数量用到了比较大小求最小值
+
+```
+let arr = [1,2,3,4,5,6];
+let minNum = Math.min.apply(null,arr);
+console.log(minNum);
+```
+运行结果是:1;
+Math.min 可以实现得到数组中最小的一项
+Math.min.apply(null,arr)其中第一个参数null，这个是因为没有对象去调用这个方法，所以直接传递null过去。同理,Math.max.apply可以获得数组里面最大的值。
+
+## element远程搜索组件注意点
+```
+querySearchAsync(queryString, cb) {
+	var restaurants = this.restaurants;
+	var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
+
+	clearTimeout(this.timeout);
+	this.timeout = setTimeout(() => {
+	  cb(results);
+	}, 3000 * Math.random());
+}
+```
+要搜索结果显示的值必须是放在返回结果中key为value的值
