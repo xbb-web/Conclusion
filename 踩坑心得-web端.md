@@ -50,7 +50,15 @@ MessageBox.confirm('该信息不会被显示', {
 
 ## Javascript
 
-
+#### safari 中没办法在回调函数里面执行window.open
+原因：Safari的安全机制不允许
+解决办法：在回调函数外使用window.open打开一个空白页面，然后在回调函数内修改打开页面的location属性
+```
+let winRef = window.open('', '_blank')
+api.post(url, data).then(() => {
+  winRef.location = 'a.com'
+})
+```
 
 
 
